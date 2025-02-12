@@ -13,6 +13,7 @@ import (
 
 	dist "github.com/PaulXu-cn/go-mod-graph-chart/godist"
 	src "github.com/PaulXu-cn/go-mod-graph-chart/gosrc"
+	"github.com/PaulXu-cn/go-mod-graph-chart/gosrc/webbrowser"
 )
 
 var (
@@ -76,11 +77,11 @@ type TreeJson struct {
 }
 
 type AnTreeData struct {
-	Tree  map[string]*src.Tree `json:"tree"`
+	Tree map[string]*src.Tree `json:"tree"`
 }
 
 type AnTreeJson struct {
-	Message string   `json:"message"`
+	Message string     `json:"message"`
 	Data    AnTreeData `json:"data"`
 }
 
@@ -158,7 +159,7 @@ func main() {
 		fmt.Printf("gmchart server listen err(%v)\n", err)
 	}
 
-	mux.HandleFunc("/an-tree.json", func (w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/an-tree.json", func(w http.ResponseWriter, r *http.Request) {
 		var header = w.Header()
 		header.Add("Content-type", "text/javascript; charset=utf-8")
 		w.WriteHeader(http.StatusOK)
@@ -184,7 +185,7 @@ func main() {
 
 	go func() error {
 		// open it by default browser
-		return src.OpenBrowser(printAddr)
+		return webbrowser.Open(printAddr)
 	}()
 
 	if 1 > keep {
